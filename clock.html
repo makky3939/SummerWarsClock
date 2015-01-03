@@ -1,0 +1,120 @@
+<!DOCTYPE html> 
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
+	<title></title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="./app.js"></script>
+	<style>
+	html{
+	width:100%;
+	height:100%;
+
+ 
+    background:url('./Output/33df0e27.png') no-repeat center; 
+ 
+    background-size:cover; 
+	}
+	</style>
+	
+	    <script>
+var app = (function(){
+
+function _world(){
+	var renderer = new THREE.WebGLRenderer({ antialias:true });
+		renderer.setSize(768, 768);
+		renderer.setClearColorHex(0xffffff, 1);
+		document.body.appendChild(renderer.domElement);
+
+	var scene = new THREE.Scene();
+
+	var camera = new THREE.PerspectiveCamera(40, 500 / 500);
+		camera.position = new THREE.Vector3(0, 0, 8);
+		camera.lookAt(new THREE.Vector3(0, 0, 0));
+		scene.add(camera);
+
+	var ambient = new THREE.AmbientLight(0xffffff);
+		scene.add(ambient);
+
+	var geometry = new THREE.SphereGeometry(2, 32, 16);
+	var material = new THREE.MeshPhongMaterial({
+        color: 0xffffff, specular: 0xffffff,
+		ambient: 0xffffff, side: THREE.DoubleSide,opacity:0.7,depthTest:false,
+        map: THREE.ImageUtils.loadTexture('./Output/33df0e27.png') });
+	var mesh = new THREE.Mesh(geometry, material);
+		scene.add(mesh);
+
+	var baseTime = +new Date;
+	function render() {
+        requestAnimationFrame(render);
+		mesh.rotation.z = 45 / 180 * Math.PI;
+		mesh.rotation.x = 0.7 * (+new Date - baseTime) / 6000;
+        renderer.render(scene, camera);
+	};
+	
+	render(); 
+}
+
+function _clock(){
+	now = new Date() ;
+    h = now.getHours();
+    mi = now.getMinutes();
+    s = now.getSeconds();
+	ms = now.getMilliseconds()
+ 
+    if ( h < 10 ) { h = "0" + h ; }
+    if ( mi < 10 ) { mi = "0" + mi ; }
+    if ( s < 10 ) { s = "0" + s ; }
+	if ( ms < 10 ) { ms = "0" + ms ; }
+	if ( ms < 100 ) { ms = "0" + ms ; }
+
+	$("#clock").html(h + ":" + mi + ":" + s + ":" + ms);
+	setTimeout("app.clock()", 10);
+}
+
+return {world:_world,clock:_clock};
+
+}());
+
+
+app.clock();
+</script>
+
+<style>
+#clock{
+	position: relative;
+	margin:auto auto;
+
+	width:600px;
+	text-align:center;
+	padding:10px;
+	color:#454545;
+	background:#eee;
+	opacity: 0.9;
+	font-size:90px;
+  }
+</style>
+</head>
+
+<body>
+
+
+<div id="clock"> </div>
+
+
+</body>
+ 
+	  <script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47562530-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>
